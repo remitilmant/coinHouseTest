@@ -36,11 +36,6 @@ export function LookUp() {
   };
   return (
     <View style={styles.container}>
-      <ModalInfos
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        transaction={selectedTransaction}
-      />
       <View style={styles.adressContainer}>
         <Text style={styles.title}>Please enter a valid etherum adress:</Text>
         <TextInput
@@ -80,6 +75,13 @@ export function LookUp() {
           />
         )}
       </View>
+      {modalVisible && (
+        <ModalInfos
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          transaction={selectedTransaction}
+        />
+      )}
     </View>
   );
 }
@@ -88,11 +90,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#222b45",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
     flex: 10,
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
   },
   adressContainer: {
+    margintop: 0,
     display: "flex",
     flex: 3,
     alignItems: "center",
@@ -114,6 +116,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#0047AB",
     padding: 5,
+    minWidth: 350,
   },
   buttonContainer: {
     width: 150,
