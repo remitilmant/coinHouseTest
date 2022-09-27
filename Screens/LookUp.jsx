@@ -14,7 +14,7 @@ import ModalInfos from "../Components/ModalInfos";
 export function LookUp() {
   const [transactionsList, setTransactionsList] = useState([]);
   const [adress, setAdress] = useState(
-    "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC"
+    "0xf7eB7637DeD2696B152c7D5EDEe502902B0F1c91"
   );
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -109,7 +109,12 @@ const styles = StyleSheet.create({
     padding: 10,
     color: "#ffffff",
   },
-  textInput: { color: "#a8abb5", borderWidth: 1 },
+  textInput: {
+    color: "#a8abb5",
+    borderWidth: 1,
+    borderColor: "#0047AB",
+    padding: 5,
+  },
   buttonContainer: {
     width: 150,
     alignItems: "center",
