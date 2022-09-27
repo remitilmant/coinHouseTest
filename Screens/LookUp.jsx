@@ -5,25 +5,42 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchData } from "../Core/Api";
 import TransactionTiles from "../Components/TransactionTile";
-
+import ModalInfos from "../Components/ModalInfos";
 export function LookUp() {
   const [transactionsList, setTransactionsList] = useState([]);
   const [adress, setAdress] = useState(
     "0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC"
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState({});
 
-  const getTransaction = () => {
+  const getTransaction = (adressInfo) => {
     setIsLoading(true);
-    fetchData(adress, "", setTransactionsList, setIsLoading);
+    fetchData(
+      adressInfo ? adressInfo : adress,
+      "4WZZ7X9VWP9C9QTY3UC2YYSTY7JZACZ1NC",
+      setTransactionsList,
+      setIsLoading
+    );
   };
-
+  const upDateTransaction = (newAdress) => {
+    setAdress(newAdress);
+    setSelectedTransaction(newAdress);
+    getTransaction(newAdress);
+  };
   return (
     <View style={styles.container}>
+      <ModalInfos
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        transaction={selectedTransaction}
+      />
       <View style={styles.adressContainer}>
         <Text style={styles.title}>Please enter a valid etherum adress:</Text>
         <TextInput
@@ -41,7 +58,7 @@ export function LookUp() {
       </View>
       <View style={styles.listContainer}>
         {isLoading ? (
-          <Text>CHARGEMENT</Text>
+          <ActivityIndicator size="large" />
         ) : (
           <FlatList
             style={styles.list}
@@ -52,10 +69,13 @@ export function LookUp() {
                   transaction={item}
                   to={item.to}
                   value={item.value}
+                  modalSetter={setModalVisible}
+                  setSelectedTransaction={setSelectedTransaction}
+                  upDateTransaction={upDateTransaction}
                 />
               );
             }}
-            keyExtractor={(item) => item.blockHash}
+            keyExtractor={(item) => item.hash}
             extraData={transactionsList}
           />
         )}
@@ -73,7 +93,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   adressContainer: {
-    marginTop: 5,
     display: "flex",
     flex: 3,
     alignItems: "center",
@@ -97,10 +116,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 4,
     backgroundColor: "#3366ff",
-    color: "red",
   },
   button: {
     color: "white",
     fontSize: 17,
+    padding: 10,
   },
 });
