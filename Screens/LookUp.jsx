@@ -21,13 +21,17 @@ export function LookUp() {
   const [selectedTransaction, setSelectedTransaction] = useState({});
 
   const getTransaction = (adressInfo) => {
-    setIsLoading(true);
-    fetchData(
-      adressInfo ? adressInfo : adress,
-      "4WZZ7X9VWP9C9QTY3UC2YYSTY7JZACZ1NC",
-      setTransactionsList,
-      setIsLoading
-    );
+    if (adress) {
+      setIsLoading(true);
+      fetchData(
+        adressInfo ? adressInfo : adress,
+        "4WZZ7X9VWP9C9QTY3UC2YYSTY7JZACZ1NC",
+        setTransactionsList,
+        setIsLoading
+      );
+    } else {
+      return alert("please enter valid ETHERUM adress");
+    }
   };
   const upDateTransaction = (newAdress) => {
     setAdress(newAdress);
