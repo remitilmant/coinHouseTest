@@ -11,14 +11,22 @@ import React, { useEffect, useState } from "react";
 import { fetchData } from "../Core/Api";
 import TransactionTiles from "../Components/TransactionTile";
 import ModalInfos from "../Components/ModalInfos";
+import { useRoute } from "@react-navigation/native";
+import { errorHandler } from "../Utils/ErrorHandler";
 export function LookUp() {
+  const route = useRoute();
+
   const [transactionsList, setTransactionsList] = useState([]);
-  const [adress, setAdress] = useState(
-    "0xf7eB7637DeD2696B152c7D5EDEe502902B0F1c91"
-  );
+  const [adress, setAdress] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState({});
+
+  useEffect(() => {
+    if (route?.params?.adress?.length > 0) {
+      return setAdress(route?.params?.adress);
+    }
+  }, [route?.params?.adress]);
 
   const getTransaction = (adressInfo) => {
     if (adress) {
@@ -27,7 +35,8 @@ export function LookUp() {
         adressInfo ? adressInfo : adress,
         "4WZZ7X9VWP9C9QTY3UC2YYSTY7JZACZ1NC",
         setTransactionsList,
-        setIsLoading
+        setIsLoading,
+        errorHandler
       );
     } else {
       return alert("please enter valid ETHERUM adress");
