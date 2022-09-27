@@ -52,6 +52,8 @@ export function LookUp() {
       <View style={styles.adressContainer}>
         <Text style={styles.title}>Please enter a valid etherum adress:</Text>
         <TextInput
+          placeholder="Ex : 0xc5102fE9359FD9a28f877a67E36B0F050d81a3CC"
+          placeholderTextColor="#ffff"
           style={styles.textInput}
           onChangeText={(e) => setAdress(e)}
           value={adress}
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
   },
   textInput: {
-    color: "#a8abb5",
+    color: "#ffff",
     borderWidth: 1,
     borderColor: "#0047AB",
     padding: 5,
