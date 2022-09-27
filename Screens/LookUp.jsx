@@ -12,6 +12,7 @@ import { fetchData } from "../Core/Api";
 import TransactionTiles from "../Components/TransactionTile";
 import ModalInfos from "../Components/ModalInfos";
 import { useRoute } from "@react-navigation/native";
+import { errorHandler } from "../Utils/ErrorHandler";
 export function LookUp() {
   const route = useRoute();
 
@@ -34,7 +35,8 @@ export function LookUp() {
         adressInfo ? adressInfo : adress,
         "4WZZ7X9VWP9C9QTY3UC2YYSTY7JZACZ1NC",
         setTransactionsList,
-        setIsLoading
+        setIsLoading,
+        errorHandler
       );
     } else {
       return alert("please enter valid ETHERUM adress");
